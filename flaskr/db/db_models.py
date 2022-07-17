@@ -1,28 +1,30 @@
 import uuid
 
-from sqlalchemy import Column, String
 from sqlalchemy.dialects.postgresql import UUID
 
-from db.db import Base
+from db.db import db
 
 
-class User(Base):
+class User(db.Model):
     __tablename__ = 'users'
+    __table_args__ = {
+        'schema': 'auth',
+    }
 
-    id = Column(
+    id = db.Column(
         UUID(as_uuid=True),
         primary_key=True,
         default=uuid.uuid4,
         unique=True,
         nullable=False,
     )
-    login = Column(
-        String,
+    login = db.Column(
+        db.String,
         unique=True,
         nullable=False,
     )
-    password = Column(
-        String,
+    password = db.Column(
+        db.String,
         nullable=False,
     )
 

@@ -11,7 +11,7 @@ def hello_world():
 
 
 def main():
-    init_db()
+    init_db(app)
     app.run(debug=True)
 
 
