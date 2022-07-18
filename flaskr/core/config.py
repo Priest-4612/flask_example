@@ -24,8 +24,8 @@ class BaseDSNSettings(BaseSettings):
     PASSWORD: str = ''
     HOST: str = ''
     PORT: int = 0
+    DATABASE_NAME: str = ''
     PROTOCOL: str = ''
-    PATH: str = ''
     DSN: AnyUrl = None
 
     @validator('DSN', pre=True)
@@ -38,23 +38,23 @@ class BaseDSNSettings(BaseSettings):
         passwd = values['PASSWORD']
         host = values['HOST']
         port = values['PORT']
-        path = values['PATH']
+        database_name = values['DATABASE_NAME']
 
         if user and passwd:
-            return '{protocol}://{user}:{passwd}@{host}:{port}/{path}'.format(
+            return '{protocol}://{user}:{passwd}@{host}:{port}/{database_name}'.format(
                 protocol=protocol,
                 user=user,
                 passwd=passwd,
                 host=host,
                 port=port,
-                path=path,
+                database_name=database_name,
             )
 
-        return '{protocol}://{host}:{port}/{path}'.format(
+        return '{protocol}://{host}:{port}/{database_name}'.format(
                 protocol=protocol,
                 host=host,
                 port=port,
-                path=path,
+                database_name=database_name,
         )
 
 
@@ -72,3 +72,8 @@ class CommonSettings(BaseSettings):
     DEBUG: bool = False
     WSGI: WSGISettings = WSGISettings()
     DB: DatabaseSettings = DatabaseSettings()
+
+
+if __name__ == '__main__':
+    cfg = CommonSettings()
+    print(cfg.DB)
